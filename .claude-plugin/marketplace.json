@@ -1,0 +1,17 @@
+{
+  "name": "almost-yolo-guard",
+  "owner": {
+    "name": "Victor Arias",
+    "email": "victor@victorarias.com"
+  },
+  "metadata": {
+    "description": "AI-powered permission auto-approval for Claude Code using Opus 4.5"
+  },
+  "plugins": [
+    {
+      "name": "almost-yolo-guard",
+      "source": ".",
+      "description": "Route Claude Code permission requests to Opus 4.5 for intelligent auto-approval"
+    }
+  ]
+}
