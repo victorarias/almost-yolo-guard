@@ -2,7 +2,7 @@
 
 A Claude Code plugin that routes permission requests to Opus 4.5 for intelligent auto-approval.
 
-Inspired by [this tweet](https://x.com/victorarias/status/1885508850920591752) about using Claude Opus as a security reviewer for Claude Code.
+Inspired by [this tweet](https://x.com/bcherny/status/2017742755737555434) about using Claude Opus as a security reviewer for Claude Code.
 
 ## What It Does
 
