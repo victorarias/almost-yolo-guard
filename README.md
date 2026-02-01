@@ -24,20 +24,23 @@ This gives you an "almost YOLO" mode — most routine operations sail through, b
 ### Via Claude Code Plugin (Recommended)
 
 ```bash
-# Install directly from GitHub
-/plugin install victorarias/almost-yolo-guard
+# Add the repository as a marketplace
+/plugin marketplace add victorarias/almost-yolo-guard
+
+# Install the plugin
+/plugin install almost-yolo-guard@almost-yolo-guard
 ```
 
 That's it! The plugin auto-configures the PermissionRequest hook.
 
-### Manual Installation
+### Manual Installation (Development)
 
 ```bash
 git clone https://github.com/victorarias/almost-yolo-guard
 cd almost-yolo-guard/src
 go build -o ../bin/almost-yolo-guard
 
-# Then use as local plugin
+# Use as local plugin during development
 claude --plugin-dir ~/path/to/almost-yolo-guard
 ```
 
