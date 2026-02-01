@@ -3,7 +3,7 @@
     "PermissionRequest": [{
       "hooks": [{
         "type": "command",
-        "command": "${CLAUDE_PLUGIN_ROOT}/bin/almost-yolo-guard"
+        "command": "${CLAUDE_PLUGIN_ROOT}/bin/run.sh"
       }]
     }]
   }
