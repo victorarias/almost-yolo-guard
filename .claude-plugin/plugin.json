@@ -1,0 +1,7 @@
+{
+  "name": "almost-yolo-guard",
+  "version": "0.1.0",
+  "description": "Route Claude Code permission requests to Opus 4.5 for intelligent auto-approval",
+  "author": "victorarias",
+  "repository": "https://github.com/victorarias/almost-yolo-guard"
+}
