@@ -152,3 +152,34 @@ func TestGetModel(t *testing.T) {
 		t.Errorf("Expected env model claude-sonnet-4-20250514, got %s", model)
 	}
 }
+
+func TestShouldSkipEvaluation(t *testing.T) {
+	// Tools that should be skipped (no security evaluation needed)
+	skipTools := []string{
+		"ExitPlanMode", "EnterPlanMode", // Plan mode
+		"AskUserQuestion",                                                   // User interaction
+		"TaskCreate", "TaskUpdate", "TaskList", "TaskGet", "TaskStop", "TaskOutput", // Task tracking
+		"Read", "Glob", "Grep", "WebFetch", "WebSearch", // Read-only
+		"Task", "Skill", // Subagent/skill invocation
+	}
+
+	for _, tool := range skipTools {
+		if !shouldSkipEvaluation(tool) {
+			t.Errorf("Expected %s to be skipped, but it wasn't", tool)
+		}
+	}
+
+	// Tools that should NOT be skipped (need security evaluation)
+	evalTools := []string{
+		"Bash",         // Shell commands need evaluation
+		"Write",        // File creation needs evaluation
+		"Edit",         // File modification needs evaluation
+		"NotebookEdit", // Notebook changes need evaluation
+	}
+
+	for _, tool := range evalTools {
+		if shouldSkipEvaluation(tool) {
+			t.Errorf("Expected %s to require evaluation, but it was skipped", tool)
+		}
+	}
+}

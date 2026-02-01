@@ -213,6 +213,12 @@ func main() {
 		return
 	}
 
+	// Skip evaluation for tools that don't need security review
+	if shouldSkipEvaluation(toolName) {
+		exitPassthrough("")
+		return
+	}
+
 	// Format tool input for the prompt
 	toolInputStr := string(hookInput.ToolInput)
 
@@ -244,6 +250,40 @@ func getModel() string {
 		return model
 	}
 	return DefaultModel
+}
+
+// skipEvaluationTools contains tools that don't need security evaluation.
+// These are either read-only, user-facing, or internal tracking tools.
+var skipEvaluationTools = map[string]bool{
+	// Plan mode - separate UX flow for plan approval
+	"ExitPlanMode":  true,
+	"EnterPlanMode": true,
+
+	// User interaction - just prompts the user
+	"AskUserQuestion": true,
+
+	// Task tracking - internal state management
+	"TaskCreate": true,
+	"TaskUpdate": true,
+	"TaskList":   true,
+	"TaskGet":    true,
+	"TaskStop":   true,
+	"TaskOutput": true,
+
+	// Read-only tools - no side effects
+	"Read":      true,
+	"Glob":      true,
+	"Grep":      true,
+	"WebFetch":  true,
+	"WebSearch": true,
+
+	// Subagent/skill invocation - spawns isolated work
+	"Task":  true,
+	"Skill": true,
+}
+
+func shouldSkipEvaluation(toolName string) bool {
+	return skipEvaluationTools[toolName]
 }
 
 func evaluateWithClaude(toolName, toolInput, workDir string) (string, string) {
