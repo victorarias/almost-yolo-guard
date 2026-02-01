@@ -49,14 +49,14 @@ jobs:
           GOOS: ${{ matrix.goos }}
           GOARCH: ${{ matrix.goarch }}
         run: |
-          cd src
-          go build -ldflags="-s -w" -o ../bin/almost-yolo-guard-${{ matrix.suffix }}
+          cd plugin/src
+          go build -ldflags="-s -w" -o ../../almost-yolo-guard-${{ matrix.suffix }}
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: almost-yolo-guard-${{ matrix.suffix }}
-          path: bin/almost-yolo-guard-${{ matrix.suffix }}
+          path: almost-yolo-guard-${{ matrix.suffix }}
 
   release:
     needs: build

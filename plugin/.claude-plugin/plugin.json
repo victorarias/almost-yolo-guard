@@ -1,6 +1,6 @@
 {
   "name": "almost-yolo-guard",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Route Claude Code permission requests to Opus 4.5 for intelligent auto-approval",
   "author": {
     "name": "Victor Arias"
