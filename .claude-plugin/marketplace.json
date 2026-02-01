@@ -10,7 +10,10 @@
   "plugins": [
     {
       "name": "almost-yolo-guard",
-      "source": "github:victorarias/almost-yolo-guard",
+      "source": {
+        "source": "github",
+        "repo": "victorarias/almost-yolo-guard"
+      },
       "description": "Route Claude Code permission requests to Opus 4.5 for intelligent auto-approval"
     }
   ]
