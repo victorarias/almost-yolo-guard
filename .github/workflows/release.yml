@@ -71,13 +71,24 @@ jobs:
       - name: Sync plugin.json version with tag
         run: |
           VERSION="${GITHUB_REF_NAME#v}"
-          echo "Updating plugin.json to version $VERSION"
-          cd plugin/.claude-plugin
-          jq --arg v "$VERSION" '.version = $v' plugin.json > plugin.json.tmp
-          mv plugin.json.tmp plugin.json
-          cat plugin.json
+          CURRENT_VERSION=$(jq -r '.version' plugin/.claude-plugin/plugin.json)
+          echo "Tag version: $VERSION"
+          echo "Current version on main: $CURRENT_VERSION"
+
+          # Compare versions (sort -V handles semver correctly)
+          HIGHER=$(printf '%s\n%s' "$CURRENT_VERSION" "$VERSION" | sort -V | tail -n1)
+          if [ "$HIGHER" != "$VERSION" ]; then
+            echo "::warning::Skipping version update: tag $VERSION is not >= current $CURRENT_VERSION"
+            echo "SKIP_VERSION_UPDATE=true" >> "$GITHUB_ENV"
+          else
+            cd plugin/.claude-plugin
+            jq --arg v "$VERSION" '.version = $v' plugin.json > plugin.json.tmp
+            mv plugin.json.tmp plugin.json
+            cat plugin.json
+          fi
 
       - name: Commit version update
+        if: env.SKIP_VERSION_UPDATE != 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
