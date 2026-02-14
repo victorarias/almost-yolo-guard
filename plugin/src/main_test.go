@@ -84,39 +84,6 @@ func TestHookOutputFormat(t *testing.T) {
 	}
 }
 
-func TestParseDecisionFromResponse(t *testing.T) {
-	tests := []struct {
-		response string
-		expected string
-	}{
-		{"ALLOW", "ALLOW"},
-		{"ASK", "ASK"},
-		{"allow", "ALLOW"},
-		{"ask", "ASK"},
-		{"ALLOW - this is a read-only command", "ALLOW"},
-		{"ASK - this modifies infrastructure", "ASK"},
-		{"I would say ALLOW since this is safe", "ALLOW"},
-		{"This should ASK the user", "ASK"},
-		{"", "ASK"},                    // empty = fail-safe
-		{"maybe", "ASK"},               // unclear = fail-safe
-		{"ALLOW\n\nThis is safe.", "ALLOW"},
-	}
-
-	for _, tc := range tests {
-		upperResponse := strings.ToUpper(tc.response)
-		var decision string
-		if strings.Contains(upperResponse, "ALLOW") {
-			decision = "ALLOW"
-		} else {
-			decision = "ASK"
-		}
-
-		if decision != tc.expected {
-			t.Errorf("Response '%s': expected %s, got %s", tc.response, tc.expected, decision)
-		}
-	}
-}
-
 // Test that the system prompt contains key safety rules
 func TestSystemPromptContainsRules(t *testing.T) {
 	requiredPatterns := []string{

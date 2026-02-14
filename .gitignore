@@ -1,5 +1,7 @@
 # Binary
+almost-yolo-guard
 plugin/bin/almost-yolo-guard
+plugin/src/almost-yolo-guard
 
 # IDE
 .idea/
